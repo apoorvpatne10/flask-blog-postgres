@@ -1,0 +1,252 @@
+{
+  "info": {
+    "_postman_id": "75c3a2ec-75f6-41c2-a3c6-35c2dd47acbb",
+    "name": "FlaskBlog",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "7436273"
+  },
+  "item": [
+    {
+      "name": "Get Specific Blog",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host_name}}/api/blogs/1",
+          "host": ["{{host_name}}"],
+          "path": ["api", "blogs", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Blog",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// let xsrfCookie = postman.GetResponseCookie(\"csrf_access_token\");\r",
+              "\r",
+              "// postman.setEnvironmentVariable(\"xsrf-token\", xsrfCookie.value);\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrf_token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"xman blog 2\",\r\n    \"content\" : \"Where spiderman?\"    \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host_name}}/api/blogs",
+          "host": ["{{host_name}}"],
+          "path": ["api", "blogs"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer ",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\" : \"rds_user\",\r\n    \"password\" : \"temppass\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host_name}}/api/register",
+          "host": ["{{host_name}}"],
+          "path": ["api", "register"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var csrfCookie = pm.cookies.find(cookie => cookie.name == 'csrf_access_token');\r",
+              "if (csrfCookie) {\r",
+              "    let csrfToken = csrfCookie.value;\r",
+              "    pm.collectionVariables.set(\"csrf_token\", csrfToken);\r",
+              "    console.log('CSRF token updated in collection variable:', csrfToken);\r",
+              "} else {\r",
+              "    console.log('CSRF token cookie not found in response cookies');\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\" : \"rds_user\",\r\n    \"password\" : \"temppass\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host_name}}/api/login",
+          "host": ["{{host_name}}"],
+          "path": ["api", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{host_name}}/api/logout",
+          "host": ["{{host_name}}"],
+          "path": ["api", "logout"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Blogs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host_name}}/api/blogs",
+          "host": ["{{host_name}}"],
+          "path": ["api", "blogs"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Blog",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrf_token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\" : \"new title by rds\",\r\n    \"content\" : \"new content is up!!\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host_name}}/api/blogs/2",
+          "host": ["{{host_name}}"],
+          "path": ["api", "blogs", "2"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Blog",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrf_token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{host_name}}/api/blogs/1",
+          "host": ["{{host_name}}"],
+          "path": ["api", "blogs", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host_name}}/api/test",
+          "host": ["{{host_name}}"],
+          "path": ["api", "test"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "xsrf-token",
+      "value": "4049f208-6430-4d8c-999c-14ba0cef125c",
+      "disabled": true
+    },
+    {
+      "key": "csrf_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "host_name",
+      "value": "http://127.0.0.1:5000"
+    }
+  ]
+}
